@@ -8,11 +8,11 @@
                         <div class="card-body p-5">
                             <div class="text-center">
                                 <div class="mx-auto mb-4 text-center auth-logo">
-                                    <a href="index.html" class="logo-dark">
-                                        <img src="{{ asset('assets/images/logo-dark.png') }}" height="32" alt="logo dark">
+                                    <a href="" class="logo-dark">
+                                        <img src="{{ asset('assets/images/logo-kas.png') }}" height="32" alt="logo dark">
                                     </a>
-                                    <a href="index.html" class="logo-light">
-                                        <img src="{{ asset('assets/images/logo-light.png') }}" height="32" alt="logo light">
+                                    <a href="" class="logo-light">
+                                        <img src="{{ asset('assets/images/logo-kas.png') }}" height="32" alt="logo light">
                                     </a>
                                 </div>
                                 <h3 class="fw-bold text-primary mb-2">Welcome back!</h3>
@@ -30,7 +30,6 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <label for="password" class="form-label">Password</label>
-                                        <a href="{{ route('password.request') }}" class="text-decoration-none small text-muted">Forgot password?</a>
                                     </div>
                                     <input type="password" name="password" class="form-control bg-light border-light @error('password') is-invalid @enderror" id="password" placeholder="Enter your password" required>
                                     @error('password')
