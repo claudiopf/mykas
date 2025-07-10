@@ -33,7 +33,8 @@ class UserManagementController extends Controller
                                     data-role="'. $user->role .'">
                                     <iconify-icon icon="solar:pen-bold" class="me-1"></iconify-icon>Edit
                                 </button>
-                                <a href="#" class="btn btn-sm btn-danger">
+                                <a href="#" class="btn btn-sm btn-danger btnDeleteUser"
+                                    data-id="'. $user->id .'">
                                     <iconify-icon icon="solar:trash-bin-trash-bold" class="me-1"></iconify-icon>Delete
                                 </a>
                             </div>
@@ -94,6 +95,14 @@ class UserManagementController extends Controller
         $user->update($data);
 
         return response()->json(['message' => 'User berhasil diupdate']);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'User berhasil dihapus']);
     }
 
 }

@@ -120,31 +120,35 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-arrow" href="#capaian" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="capaian">
+                    <a class="nav-link menu-arrow" href="#sales" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sales">
                                  <span class="nav-icon">
-                                      <iconify-icon icon="solar:cup-bold-duotone"></iconify-icon>
+                                      <iconify-icon icon="solar:graph-broken"></iconify-icon>
                                  </span>
-                        <span class="nav-text">Pencapaian</span>
+                        <span class="nav-text">Sales</span>
                     </a>
-                    <div class="collapse" id="capaian">
+                    <div class="collapse" id="sales">
                         <ul class="nav sub-navbar-nav">
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Total Capaian Sales</a>
+                                <a class="sub-nav-link" href="#">Sales Order</a>
                             </li>
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Total Penjualan per Toko</a>
+                                <a class="sub-nav-link" href="#">Transaksi</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="#">Track Sales</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="#">Laporan Kunjungan sales</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="#">Pencapaian Sales</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="#">Pencapaian Toko</a>
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/sales-tracker">
-                        <span class="nav-icon">
-                            <iconify-icon icon="solar:point-on-map-outline"></iconify-icon>
-                        </span>
-                        <span class="nav-text">Track Sales</span>
-                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-arrow" href="#userManagement" data-bs-toggle="collapse" role="button"

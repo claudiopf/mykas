@@ -236,6 +236,47 @@
                     }
                 });
             });
+
+            $(document).on('click', '.btnDeleteUser', function (e) {
+                e.preventDefault();
+
+                let userId = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Aksi ini tidak bisa dibatalkan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e3342f',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:  '/user-management/' + userId,
+                            type: 'DELETE',
+                            success: function (response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message || 'User berhasil dihapus',
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                });
+                                $('#tableUser').DataTable().ajax.reload();
+                            },
+                            error: function (xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Gagal menghapus user. Silakan coba lagi.',
+                                });
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 @endpush

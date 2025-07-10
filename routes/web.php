@@ -16,4 +16,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('user_management.index');
     Route::post('/user-management/store', [UserManagementController::class, 'store'])->name('user_management.store');
     Route::patch('/user-management/{id}', [UserManagementController::class, 'update'])->name('user_management.update');
+    Route::delete('/user-management/{id}', [UserManagementController::class, 'destroy'])->name('user_management.destroy');
 });
