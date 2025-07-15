@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'sales', 'ssadmin'])->default('user');
+            $table->foreignId('area_id')->constrained('areas')->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

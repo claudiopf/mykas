@@ -120,6 +120,31 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-arrow" href="#masterdata" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="masterdata">
+                                 <span class="nav-icon">
+                                      <iconify-icon icon="solar:folder-with-files-broken"></iconify-icon>
+                                 </span>
+                        <span class="nav-text">Master Data</span>
+                    </a>
+                    <div class="collapse" id="masterdata">
+                        <ul class="nav sub-navbar-nav">
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('area.index') }}">Area</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('brand.index') }}">Brand</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('product.index') }}">Produk</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('retail.index') }}">Toko</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-arrow" href="#sales" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sales">
                                  <span class="nav-icon">
@@ -137,9 +162,6 @@
                             </li>
                             <li class="sub-nav-item">
                                 <a class="sub-nav-link" href="#">Track Sales</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Laporan Kunjungan sales</a>
                             </li>
                             <li class="sub-nav-item">
                                 <a class="sub-nav-link" href="#">Pencapaian Sales</a>
