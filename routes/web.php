@@ -21,8 +21,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/brand', [BrandController::class, 'index'])->name('brand.index');
     Route::post('/brand/store', [BrandController::class, 'store'])->name('brand.store');
+    Route::patch('/brand/{id}', [BrandController::class, 'update'])->name('brand.update');
+    ROute::delete('/brand/{id}', [BrandController::class, 'destroy'])->name('brand.destroy');
 
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 
     Route::get('/retail', [RetailController::class, 'index'])->name('retail.index');
 

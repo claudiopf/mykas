@@ -92,6 +92,7 @@ class UserManagementController extends Controller
 
             $data['password'] = bcrypt($request->password);
         }
+
         $user->update($data);
 
         return response()->json(['message' => 'User berhasil diupdate']);

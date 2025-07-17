@@ -51,7 +51,33 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary" id="btnAddUser">Simpan</button>
+                        <button type="submit" class="btn btn-primary" id="btnAddBrand">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Edit -->
+    <div class="modal fade" id="modalEditBrand" tabindex="-1" aria-labelledby="editBrandLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="formEditBrand">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" name="id" id="edit-id">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit-nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" name="nama" id="edit-nama">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -120,16 +146,13 @@
                 });
             });
 
-            $(document).on('click', '.btnEditUser', function () {
+            $(document).on('click', '.btnEditBrand', function () {
                 $('#edit-id').val($(this).data('id'));
-                $('#edit-name').val($(this).data('name'));
-                $('#edit-email').val($(this).data('email'));
-                $('#edit-role').val($(this).data('role'));
-                $('#edit_password').val('');
-                $('#modalEditUser').modal('show');
+                $('#edit-nama').val($(this).data('nama'));
+                $('#modalEditBrand').modal('show');
             });
 
-            $('#formEditUser').on('submit', function (e) {
+            $('#formEditBrand').on('submit', function (e) {
                 e.preventDefault();
                 Swal.fire({
                     title: 'Simpan perubahan?',
@@ -150,14 +173,14 @@
                             }
                         });
                         $.ajax({
-                            url: `/user-management/${id}`,
+                            url: `/brand/${id}`,
                             method: 'PATCH',
                             data: formData,
                             success: function (res) {
-                                Swal.fire('Berhasil', 'User berhasil diperbarui', 'success');
-                                $('#modalEditUser').modal('hide');
-                                $('#formEditUser')[0].reset();
-                                $('#tableUser').DataTable().ajax.reload();
+                                Swal.fire('Berhasil', 'Brand berhasil diperbarui', 'success');
+                                $('#modalEditBrand').modal('hide');
+                                $('#formEditBrand')[0].reset();
+                                $('#tableBrand').DataTable().ajax.reload();
                             },
                             error: function (xhr) {
                                 let message = 'Terjadi kesalahan';
@@ -173,10 +196,10 @@
                 });
             });
 
-            $(document).on('click', '.btnDeleteUser', function (e) {
+            $(document).on('click', '.btnDeleteBrand', function (e) {
                 e.preventDefault();
 
-                let userId = $(this).data('id');
+                let brandId = $(this).data('id');
 
                 Swal.fire({
                     title: 'Yakin ingin menghapus?',
@@ -190,23 +213,23 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url:  '/user-management/' + userId,
+                            url:  '/brand/' + brandId,
                             type: 'DELETE',
                             success: function (response) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
-                                    text: response.message || 'User berhasil dihapus',
+                                    text: response.message || 'Brand berhasil dihapus',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });
-                                $('#tableUser').DataTable().ajax.reload();
+                                $('#tableBrand').DataTable().ajax.reload();
                             },
                             error: function (xhr) {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal',
-                                    text: 'Gagal menghapus user. Silakan coba lagi.',
+                                    text: 'Gagal menghapus brand. Silakan coba lagi.',
                                 });
                             }
                         });

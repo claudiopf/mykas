@@ -25,12 +25,12 @@ class BrandController extends Controller
                 ->addColumn('action', function ($brand) {
                     return '
                             <div class="text-center">
-                                <button class="btn btn-sm btn-warning btnEditUser"
+                                <button class="btn btn-sm btn-warning btnEditBrand"
                                     data-id="'. $brand->id .'"
-                                    data-name="'. $brand->nama .'">
+                                    data-nama="'. $brand->nama .'">
                                     <iconify-icon icon="solar:pen-bold" class="me-1"></iconify-icon>Edit
                                 </button>
-                                <a href="#" class="btn btn-sm btn-danger btnDeleteUser"
+                                <a href="#" class="btn btn-sm btn-danger btnDeleteBrand"
                                     data-id="'. $brand->id .'">
                                     <iconify-icon icon="solar:trash-bin-trash-bold" class="me-1"></iconify-icon>Delete
                                 </a>
@@ -55,5 +55,30 @@ class BrandController extends Controller
         ]);
 
         return response()->json(['message' => 'Brand ditambahkan']);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        $brand = Brand::findOrFail($id);
+
+        $data = [
+            'nama' => $request->nama,
+        ];
+
+        $brand->update($data);
+
+        return response()->json(['message' => 'Brand berhasil diupdate']);
+    }
+
+    public function destroy($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
+
+        return response()->json(['message' => 'Brand berhasil dihapus']);
     }
 }

@@ -14,4 +14,9 @@ class Product extends Model
         'deskripsi',
         'status_aktif'
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }

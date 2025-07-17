@@ -31,6 +31,9 @@
     <!-- DataTables css -->
     <link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.3.2/css/responsive.dataTables.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
 
     <!-- Theme Config js -->
     <script src="{{ asset('assets/js/config.js') }}"></script>
@@ -42,6 +45,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body>
@@ -148,7 +152,7 @@
                     <a class="nav-link menu-arrow" href="#sales" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sales">
                                  <span class="nav-icon">
-                                      <iconify-icon icon="solar:graph-broken"></iconify-icon>
+                                      <iconify-icon icon="carbon:sales-ops"></iconify-icon>
                                  </span>
                         <span class="nav-text">Sales</span>
                     </a>
@@ -176,7 +180,7 @@
                     <a class="nav-link menu-arrow" href="#userManagement" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="userManagement">
                                  <span class="nav-icon">
-                                      <iconify-icon icon="solar:users-group-two-rounded-bold-duotone"></iconify-icon>
+                                      <iconify-icon icon="icon-park:user"></iconify-icon>
                                  </span>
                         <span class="nav-text">User Management</span>
                     </a>

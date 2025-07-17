@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kode_bp')->unique();
             $table->string('kecamatan')->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('area_id')->constrained('areas')->cascadeOnDelete();
             $table->timestamps();
         });
     }
