@@ -44,21 +44,22 @@ class ProductController extends Controller
                 ->addColumn('action', function ($product) {
                     return '
                 <div class="text-center">
-                    <button class="btn btn-sm btn-warning btnEditUser"
+                    <button class="btn btn-sm btn-warning btnEditProduct"
                         data-id="'. $product->id .'"
+                        data-no_idem="'. $product->no_idem .'"
                         data-nama="'. $product->nama .'"
-                        data-harga="'. $product->harga .'"
+                        data-harga="'. number_format((int) $product->harga, 0, ',', '.') .'"
                         data-deskripsi="'. $product->deskripsi .'"
                         data-brand_id="'. $product->brand_id .'"
                         data-status_aktif="'. $product->status_aktif .'">
                         <iconify-icon icon="solar:pen-bold" class="me-1"></iconify-icon>Edit
                     </button>
-                    <a href="#" class="btn btn-sm btn-danger btnDeleteUser"
+                    <a href="#" class="btn btn-sm btn-danger btnDeleteProduct"
                         data-id="'. $product->id .'">
                         <iconify-icon icon="solar:trash-bin-trash-bold" class="me-1"></iconify-icon>Delete
                     </a>
                 </div>
-            ';
+                ';
                 })
                 ->rawColumns(['action','status'])
                 ->make(true);
@@ -84,5 +85,37 @@ class ProductController extends Controller
             'brand_id' => $request->brand_id,
             'status_aktif' => $request->status_aktif
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $rules = [
+            'nama' => 'required|string|max:255',
+            'harga' => 'required',
+            'brand_id' => 'required|exists:brands,id',
+            'status_aktif' => 'required|in:aktif,tidak aktif',
+        ];
+
+        if ($request->no_idem !== $product->no_idem) {
+            $rules['no_idem'] = 'required|unique:products,no_idem';
+        } else {
+            $rules['no_idem'] = 'required';
+        }
+
+        $validated = $request->validate($rules);
+
+        $product->update($validated);
+
+        return response()->json(['message' => 'Product berhasil diupdate']);
+    }
+
+    public function destroy ($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return response()->json(['message' => 'Product berhasil dihapus']);
     }
 }

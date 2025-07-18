@@ -26,6 +26,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+    Route::patch('/product/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
 
     Route::get('/retail', [RetailController::class, 'index'])->name('retail.index');
 

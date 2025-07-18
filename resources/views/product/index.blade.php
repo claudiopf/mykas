@@ -86,6 +86,58 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Edit -->
+    <div class="modal fade" id="modalEditProduct" tabindex="-1" aria-labelledby="editProductLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="formEditProduct">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" name="id" id="edit-id">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit-noIdem" class="form-label">No Idem</label>
+                            <input type="text" class="form-control" name="no_idem" id="edit-noIdem">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" name="nama" id="edit-nama">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-harga" class="form-label">Harga</label>
+                            <input type="text" class="form-control" name="harga" id="edit-harga">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-brand_id" class="form-label">Brand</label>
+                            <select class="form-select" name="brand_id" id="edit-brand_id">
+                                <option value="">Pilih Brand</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-status_aktif" class="form-label">Status</label>
+                            <select class="form-select" name="status_aktif" id="edit-status_aktif">
+                                <option value="">Pilih Status Aktif</option>
+                                <option value="aktif">Aktif</option>
+                                <option value="tidak aktif">Tidak Aktif</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('scripts')
     <script>
@@ -154,6 +206,120 @@
                                     text: message
                                 });
                             });
+                    }
+                });
+            });
+
+            $(document).on('click', '.btnEditProduct', function () {
+                const id = $(this).data('id');
+                const noIdem = $(this).data('no_idem');
+                const nama = $(this).data('nama');
+                const harga = $(this).data('harga');
+                const brandId = $(this).data('brand_id');
+                const statusAktif = $(this).data('status_aktif');
+
+                $('#edit-id').val(id);
+                $('#edit-noIdem').val(noIdem);
+                $('#edit-nama').val(nama);
+                $('#edit-harga').val(harga);
+                $('#edit-brand_id').val(brandId);
+                $('#edit-status_aktif').val(statusAktif);
+
+                $('#modalEditProduct').modal('show');
+            });
+
+            $('#edit-harga').on('input', function () {
+                let angka = $(this).val().replace(/\D/g, '');
+                let format = new Intl.NumberFormat('id-ID').format(angka);
+                $(this).val(format);
+            });
+
+            $('#formEditProduct').on('submit', function (e) {
+                let hargaDB = $('#edit-harga').val().replace(/\./g, '');
+                $('#edit-harga').val(hargaDB);
+            });
+
+            $('#formEditProduct').on('submit', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Simpan perubahan?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const id = $('#edit-id').val();
+                        const formData = $(this).serialize();
+                        Swal.fire({
+                            title: 'Memproses...',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        $.ajax({
+                            url: `/product/${id}`,
+                            method: 'PATCH',
+                            data: formData,
+                            success: function (res) {
+                                Swal.fire('Berhasil', 'Product berhasil diperbarui', 'success');
+                                $('#modalEditProduct').modal('hide');
+                                $('#formEditProduct')[0].reset();
+                                $('#tableProduct').DataTable().ajax.reload();
+                            },
+                            error: function (xhr) {
+                                let message = 'Terjadi kesalahan';
+                                if (xhr.responseJSON?.errors) {
+                                    message = Object.values(xhr.responseJSON.errors).flat().join('\n');
+                                } else if (xhr.responseJSON?.message) {
+                                    message = xhr.responseJSON.message;
+                                }
+                                Swal.fire('Gagal', message, 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+            $(document).on('click', '.btnDeleteProduct', function (e) {
+                e.preventDefault();
+
+                let productId = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Aksi ini tidak bisa dibatalkan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e3342f',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:  '/product/' + productId,
+                            type: 'DELETE',
+                            success: function (response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message || 'Product berhasil dihapus',
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                });
+                                $('#tableProduct').DataTable().ajax.reload();
+                            },
+                            error: function (xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Gagal menghapus brand. Silakan coba lagi.',
+                                });
+                            }
+                        });
                     }
                 });
             });

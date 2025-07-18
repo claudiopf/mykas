@@ -59,11 +59,11 @@ class BrandController extends Controller
 
     public function update(Request $request, $id)
     {
+        $brand = Brand::findOrFail($id);
+
         $request->validate([
             'nama' => 'required|string|max:255',
         ]);
-
-        $brand = Brand::findOrFail($id);
 
         $data = [
             'nama' => $request->nama,
