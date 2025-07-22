@@ -66,7 +66,7 @@
                     @method('PATCH')
                     <input type="hidden" name="id" id="edit-id">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit User</h5>
+                        <h5 class="modal-title">Edit Brand</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -92,7 +92,7 @@
                 serverSide: true,
                 ajax: '{{ route('brand.index') }}',
                 columns: [
-                    { data: 'id' },
+                    { data: 'DT_RowIndex' },
                     { data: 'nama' },
                     { data: 'action', orderable: false, searchable: false }
                 ]

@@ -6,9 +6,13 @@ use App\Http\Controllers\MasterData\BrandController;
 use App\Http\Controllers\MasterData\ProductController;
 use App\Http\Controllers\MasterData\RetailController;
 use App\Http\Controllers\UserManagement\UserManagementController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('home');
+    }
     return view('auth.login');
 });
 
@@ -18,6 +22,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/area', [AreaController::class, 'index'])->name('area.index');
+    Route::post('/area/store', [AreaController::class, 'store'])->name('area.store');
+    Route::patch('/area/{id}', [AreaController::class, 'update'])->name('area.update');
+    Route::delete('/area/{id}', [AreaController::class, 'destroy'])->name('area.destroy');
 
     Route::get('/brand', [BrandController::class, 'index'])->name('brand.index');
     Route::post('/brand/store', [BrandController::class, 'store'])->name('brand.store');

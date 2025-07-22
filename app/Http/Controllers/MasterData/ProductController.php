@@ -21,11 +21,10 @@ class ProductController extends Controller
         $brands = Brand::all();
 
         if ($request->ajax()) {
-            $products = Product::select(['id', 'no_idem', 'brand_id', 'nama' ,'harga', 'deskripsi', 'status_aktif'])
-                ->with('brand')
-                ->get();
+            $products = Product::with('brand')->get();
 
             return DataTables::of($products)
+                ->addIndexColumn()
                 ->addColumn('brand', function ($product) {
                     return $product->brand->nama ?? '-';
                 })

@@ -147,7 +147,7 @@
                 serverSide: true,
                 ajax: '{{ route('product.index') }}',
                 columns: [
-                    {data: 'id'},
+                    {data: 'DT_RowIndex'},
                     {data: 'no_idem'},
                     {data: 'nama'},
                     {data: 'harga'},

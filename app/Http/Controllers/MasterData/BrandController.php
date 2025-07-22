@@ -19,9 +19,10 @@ class BrandController extends Controller
         $title = 'Master Data - Brand';
 
         if ($request->ajax()) {
-            $brands = Brand::select(['id', 'nama']);
+            $brands = Brand::all();
 
             return DataTables::of($brands)
+                ->addIndexColumn()
                 ->addColumn('action', function ($brand) {
                     return '
                             <div class="text-center">
