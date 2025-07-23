@@ -24,6 +24,7 @@
                                     <th>Kode BP</th>
                                     <th>Kecamatan</th>
                                     <th>Kode Area</th>
+                                    <th>Sales</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
                                 </thead>
@@ -48,7 +49,8 @@
                     { data: 'nama' },
                     { data: 'kode_bp'},
                     { data: 'kecamatan'},
-                    { data: 'kode_area'},
+                    { data: 'kode_area', name: 'kode_area'},
+                    { data: 'sales', name: 'sales'},
                     { data: 'action', orderable: false, searchable: false }
                 ]
             });
@@ -59,10 +61,10 @@
                 }
             });
 
-            $('#formAddBrand').on('submit', function(e) {
+            $('#formAddRetail').on('submit', function(e) {
                 e.preventDefault();
                 Swal.fire({
-                    title: 'Tambah Brand?',
+                    title: 'Tambah Retail?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, simpan',
@@ -70,18 +72,18 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         const formData = $(this).serialize();
-                        $.post("{{ route('brand.store') }}", formData)
+                        $.post("{{ route('retail.store') }}", formData)
                             .done(function(res) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
-                                    text: 'Brand berhasil ditambahkan',
+                                    text: 'Retail berhasil ditambahkan',
                                     timer: 1500,
                                     showConfirmButton: false
                                 }).then(() => {
-                                    $('#modalAddBrand').modal('hide');
-                                    $('#formAddBrand')[0].reset();
-                                    $('#tableBrand').DataTable().ajax.reload();
+                                    $('#modalAddRetail').modal('hide');
+                                    $('#formAddRetail')[0].reset();
+                                    $('#tableRetail').DataTable().ajax.reload();
                                 });
                             })
                             .fail(function(xhr) {
@@ -101,13 +103,13 @@
                 });
             });
 
-            $(document).on('click', '.btnEditBrand', function () {
+            $(document).on('click', '.btnEditRetail', function () {
                 $('#edit-id').val($(this).data('id'));
                 $('#edit-nama').val($(this).data('nama'));
                 $('#modalEditBrand').modal('show');
             });
 
-            $('#formEditBrand').on('submit', function (e) {
+            $('#formEditRetail').on('submit', function (e) {
                 e.preventDefault();
                 Swal.fire({
                     title: 'Simpan perubahan?',
@@ -128,14 +130,14 @@
                             }
                         });
                         $.ajax({
-                            url: `/brand/${id}`,
+                            url: `/retail/${id}`,
                             method: 'PATCH',
                             data: formData,
                             success: function (res) {
-                                Swal.fire('Berhasil', 'Brand berhasil diperbarui', 'success');
-                                $('#modalEditBrand').modal('hide');
-                                $('#formEditBrand')[0].reset();
-                                $('#tableBrand').DataTable().ajax.reload();
+                                Swal.fire('Berhasil', 'Retail berhasil diperbarui', 'success');
+                                $('#modalEditRetail').modal('hide');
+                                $('#formEditRetail')[0].reset();
+                                $('#tableRetail').DataTable().ajax.reload();
                             },
                             error: function (xhr) {
                                 let message = 'Terjadi kesalahan';
@@ -151,10 +153,10 @@
                 });
             });
 
-            $(document).on('click', '.btnDeleteBrand', function (e) {
+            $(document).on('click', '.btnDeleteRetail', function (e) {
                 e.preventDefault();
 
-                let brandId = $(this).data('id');
+                let retailId = $(this).data('id');
 
                 Swal.fire({
                     title: 'Yakin ingin menghapus?',
@@ -168,23 +170,23 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url:  '/brand/' + brandId,
+                            url:  '/retail/' + retailId,
                             type: 'DELETE',
                             success: function (response) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
-                                    text: response.message || 'Brand berhasil dihapus',
+                                    text: response.message || 'Retail berhasil dihapus',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });
-                                $('#tableBrand').DataTable().ajax.reload();
+                                $('#tableRetail').DataTable().ajax.reload();
                             },
                             error: function (xhr) {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal',
-                                    text: 'Gagal menghapus brand. Silakan coba lagi.',
+                                    text: 'Gagal menghapus retail. Silakan coba lagi.',
                                 });
                             }
                         });

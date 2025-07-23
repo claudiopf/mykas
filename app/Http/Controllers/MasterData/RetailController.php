@@ -23,6 +23,12 @@ class RetailController extends Controller
 
             return DataTables::of($retails)
                 ->addIndexColumn()
+                ->addColumn('sales', function ($retail) {
+                    return 'Verstappen';
+                })
+                ->addColumn('kode_area', function ($retail) {
+                    return 'TR01';
+                })
                 ->addColumn('action', function ($retail) {
                     return '
                             <div class="text-center">

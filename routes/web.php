@@ -37,6 +37,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
 
     Route::get('/retail', [RetailController::class, 'index'])->name('retail.index');
+    Route::post('/retail/stpre', [RetailController::class, 'store'])->name('retail.store');
 
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('user_management.index');
     Route::post('/user-management/store', [UserManagementController::class, 'store'])->name('user_management.store');
