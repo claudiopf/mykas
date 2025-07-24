@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'area_id'
+        'area_id',
+        'ss_id'
     ];
 
     /**
@@ -51,5 +52,22 @@ class User extends Authenticatable
     public function retails()
     {
         return $this->hasMany(Retail::class);
+    }
+
+    public function areas()
+    {
+        return $this->belongsToMany(Area::class)
+            ->using(AreaUser::class)
+            ->withTimestamps();
+    }
+
+    public function ss()
+    {
+        return $this->belongsTo(User::class, 'ss_id');
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(User::class, 'ss_id');
     }
 }

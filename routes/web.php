@@ -5,6 +5,7 @@ use App\Http\Controllers\MasterData\AreaController;
 use App\Http\Controllers\MasterData\BrandController;
 use App\Http\Controllers\MasterData\ProductController;
 use App\Http\Controllers\MasterData\RetailController;
+use App\Http\Controllers\UserManagement\UserAccessController;
 use App\Http\Controllers\UserManagement\UserManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,10 +38,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
 
     Route::get('/retail', [RetailController::class, 'index'])->name('retail.index');
-    Route::post('/retail/stpre', [RetailController::class, 'store'])->name('retail.store');
+    Route::post('/retail/store', [RetailController::class, 'store'])->name('retail.store');
 
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('user_management.index');
     Route::post('/user-management/store', [UserManagementController::class, 'store'])->name('user_management.store');
     Route::patch('/user-management/{id}', [UserManagementController::class, 'update'])->name('user_management.update');
     Route::delete('/user-management/{id}', [UserManagementController::class, 'destroy'])->name('user_management.destroy');
+
+    Route::get('/user-access', [UserAccessController::class, 'index'])->name('user_access.index');
 });

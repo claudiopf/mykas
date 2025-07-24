@@ -4,29 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration {
     public function up(): void
     {
-        Schema::create('brands', function (Blueprint $table) {
+        Schema::create('area_user', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kode_bp')->unique()->nullable();
-            $table->string('kecamatan');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('area_id')->constrained('areas');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('area_user');
     }
 };

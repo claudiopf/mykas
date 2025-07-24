@@ -10,4 +10,11 @@ class Area extends Model
         'nama',
         'kode_area'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->using(AreaUser::class)
+            ->withTimestamps();
+    }
 }

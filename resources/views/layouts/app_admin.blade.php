@@ -188,7 +188,7 @@
                                 <a class="sub-nav-link" href="{{ route('user_management.index') }}">Tambah/Ubah</a>
                             </li>
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Hak Akses</a>
+                                <a class="sub-nav-link" href="{{ route('user_access.index') }}">Hak Akses</a>
                             </li>
                         </ul>
                     </div>

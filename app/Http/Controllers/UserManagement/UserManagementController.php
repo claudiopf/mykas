@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\AreaUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -56,12 +57,17 @@ class UserManagementController extends Controller
             'role' => 'required|in:admin,ssadmin,sales',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
+
+        AreaUser::create([
+            'user_id' => $user->id,
+        ]);
+
 
         return response()->json(['message' => 'User ditambahkan']);
     }
