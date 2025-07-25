@@ -46,4 +46,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/user-management/{id}', [UserManagementController::class, 'destroy'])->name('user_management.destroy');
 
     Route::get('/user-access', [UserAccessController::class, 'index'])->name('user_access.index');
+    Route::patch('/user-access/{id}', [UserAccessController::class, 'update'])->name('user_access.update');
 });

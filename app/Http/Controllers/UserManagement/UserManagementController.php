@@ -96,7 +96,7 @@ class UserManagementController extends Controller
                 ], 422);
             }
 
-            $data['password'] = bcrypt($request->password);
+            $data['password'] = Hash::make($request->password);
         }
 
         $user->update($data);
@@ -107,6 +107,13 @@ class UserManagementController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+
+        if ($user->role === 'sales') {
+            $user->areas()->detach();
+        } elseif ($user->role === 'ssadmin') {
+            User::where('ss_id', $user->id)->update(['ss_id' => null]);
+        }
+
         $user->delete();
 
         return response()->json(['message' => 'User berhasil dihapus']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -11,6 +12,10 @@ class UserAccessController extends Controller
 {
     public function index(Request $request)
     {
+        $areas = Area::all();
+        $roleSs = User::with('areas')
+            ->where('users.role', 'ssadmin')->get();
+
         if ($request->ajax()) {
             $userAccess = User::with('areas')
                 ->where('users.role', 'sales')->get();
@@ -24,17 +29,19 @@ class UserAccessController extends Controller
                     return $ua->ss?->name ?? 'Belum ada SS';
                 })
                 ->addColumn('area', function ($ua) {
-                    return optional($ua->areas->first())->kode_area ?? 'Belum Ada Area';
+                    return $ua->areas->pluck('kode_area')->implode(', ');
                 })
                 ->addColumn('action', function ($ua) {
                     return '
                             <div class="text-center">
                                 <button class="btn btn-sm btn-warning btnEditHakAkses"
                                     data-id="'. $ua->id .'"
-                                    data-name="'. $ua->name .'">
+                                    data-sales="'. $ua->name .'"
+                                    data-area="'. $ua->areas->pluck('id')->implode(',') .'"
+                                    data-ss="'. ($ua->ss_id ?? 'Belum Ada SS') .'">
                                     <iconify-icon icon="solar:pen-bold" class="me-1"></iconify-icon>Edit
                                 </button>
-                                <a href="#" class="btn btn-sm btn-danger btnDeleteUser"
+                                <a href="#" class="btn btn-sm btn-danger btnDeleteHakAkses"
                                     data-id="'. $ua->id .'">
                                     <iconify-icon icon="solar:trash-bin-trash-bold" class="me-1"></iconify-icon>Delete
                                 </a>
@@ -45,6 +52,28 @@ class UserAccessController extends Controller
                 ->make(true);
         }
 
-        return view('user_access.index');
+        return view('user_access.index', compact('roleSs', 'areas'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'ss_id' => 'required|exists:users,id',
+            'area_id' => 'required|array',
+            'area_id.*' => 'exists:areas,id',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'ss_id' => $request->ss_id,
+        ]);
+
+        $user->areas()->sync($request->area_id);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Hak akses berhasil diperbarui.',
+        ]);
     }
 }
