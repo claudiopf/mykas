@@ -10,12 +10,12 @@ class Retail extends Model
         'nama',
         'kode_bp',
         'kecamatan',
-        'user_id',
         'area_id',
-        'brand_id'
     ];
 
-    public function users() {
-        return $this->belongsTo(User::class);
+    public function areas() {
+        return $this->belongsToMany(Area::class)
+            ->using(AreaRetail::class)
+            ->withTimestamps();
     }
 }

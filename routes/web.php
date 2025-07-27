@@ -5,6 +5,11 @@ use App\Http\Controllers\MasterData\AreaController;
 use App\Http\Controllers\MasterData\BrandController;
 use App\Http\Controllers\MasterData\ProductController;
 use App\Http\Controllers\MasterData\RetailController;
+use App\Http\Controllers\Sales\RetailAchievementController;
+use App\Http\Controllers\Sales\SalesAchievementController;
+use App\Http\Controllers\Sales\SalesOrderController;
+use App\Http\Controllers\Sales\TrackSalesController;
+use App\Http\Controllers\Sales\TransactionController;
 use App\Http\Controllers\UserManagement\UserAccessController;
 use App\Http\Controllers\UserManagement\UserManagementController;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +44,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/retail', [RetailController::class, 'index'])->name('retail.index');
     Route::post('/retail/store', [RetailController::class, 'store'])->name('retail.store');
+    Route::patch('/retail/{id}', [RetailController::class, 'update'])->name('retail.update');
+    Route::delete('retail/{id}', [RetailController::class, 'destroy'])->name('retail.destroy');
 
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('user_management.index');
     Route::post('/user-management/store', [UserManagementController::class, 'store'])->name('user_management.store');
@@ -47,4 +54,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/user-access', [UserAccessController::class, 'index'])->name('user_access.index');
     Route::patch('/user-access/{id}', [UserAccessController::class, 'update'])->name('user_access.update');
+});
+
+Route::middleware(['auth', 'role:admin,ssadmin'])->group(function () {
+    Route::get('/sales-order', [SalesOrderController::class, 'index'])->name('sales_order.index');
+
+    Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+
+    Route::get('/track-sales', [TrackSalesController::class, 'index'])->name('track_sales.index');
+
+    Route::get('/sales-achievement', [SalesAchievementController::class, 'index'])->name('sales_achievement.index');
+
+    Route::get('/retail-achievement', [RetailAchievementController::class, 'index'])->name('retail_achievement.index');
 });

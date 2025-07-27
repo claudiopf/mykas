@@ -17,4 +17,11 @@ class Area extends Model
             ->using(AreaUser::class)
             ->withTimestamps();
     }
+
+    public function retails()
+    {
+        return $this->belongsToMany(Retail::class)
+            ->using(AreaRetail::class)
+            ->withTimestamps();
+    }
 }

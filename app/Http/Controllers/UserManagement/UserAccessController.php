@@ -32,19 +32,18 @@ class UserAccessController extends Controller
                     return $ua->areas->pluck('kode_area')->implode(', ');
                 })
                 ->addColumn('action', function ($ua) {
+                    $areaIds = $ua->areas->pluck('id')->implode(',');
+                    $ssName = $ua->ss?->name ?? 'Belum Ada SS';
+
                     return '
                             <div class="text-center">
                                 <button class="btn btn-sm btn-warning btnEditHakAkses"
-                                    data-id="'. $ua->id .'"
-                                    data-sales="'. $ua->name .'"
-                                    data-area="'. $ua->areas->pluck('id')->implode(',') .'"
-                                    data-ss="'. ($ua->ss_id ?? 'Belum Ada SS') .'">
+                                    data-id="'. e($ua->id) .'"
+                                    data-sales="'. e($ua->name) .'"
+                                    data-area="'. e($areaIds) .'"
+                                    data-ss="'. e($ssName) .'">
                                     <iconify-icon icon="solar:pen-bold" class="me-1"></iconify-icon>Edit
                                 </button>
-                                <a href="#" class="btn btn-sm btn-danger btnDeleteHakAkses"
-                                    data-id="'. $ua->id .'">
-                                    <iconify-icon icon="solar:trash-bin-trash-bold" class="me-1"></iconify-icon>Delete
-                                </a>
                             </div>
                         ';
                 })

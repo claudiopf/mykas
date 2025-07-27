@@ -34,6 +34,9 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
 
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <!-- Theme Config js -->
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
@@ -44,6 +47,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
 <body>
@@ -157,19 +161,19 @@
                     <div class="collapse" id="sales">
                         <ul class="nav sub-navbar-nav">
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Sales Order</a>
+                                <a class="sub-nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                             </li>
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Transaksi</a>
+                                <a class="sub-nav-link" href="{{ route('transaction.index') }}">Transaksi</a>
                             </li>
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Track Sales</a>
+                                <a class="sub-nav-link" href="{{ route('track_sales.index') }}">Track Sales</a>
                             </li>
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Pencapaian Sales</a>
+                                <a class="sub-nav-link" href="{{ route('sales_achievement.index') }}">Pencapaian Sales</a>
                             </li>
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="#">Pencapaian Toko</a>
+                                <a class="sub-nav-link" href="{{ route('retail_achievement.index') }}">Pencapaian Toko</a>
                             </li>
                         </ul>
                     </div>
