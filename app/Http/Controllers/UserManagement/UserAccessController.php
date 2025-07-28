@@ -33,7 +33,7 @@ class UserAccessController extends Controller
                 })
                 ->addColumn('action', function ($ua) {
                     $areaIds = $ua->areas->pluck('id')->implode(',');
-                    $ssName = $ua->ss?->name ?? 'Belum Ada SS';
+                    $ss = $ua->ss_id ?? 'Belum Ada SS';
 
                     return '
                             <div class="text-center">
@@ -41,7 +41,7 @@ class UserAccessController extends Controller
                                     data-id="'. e($ua->id) .'"
                                     data-sales="'. e($ua->name) .'"
                                     data-area="'. e($areaIds) .'"
-                                    data-ss="'. e($ssName) .'">
+                                    data-ss="'. e($ss) .'">
                                     <iconify-icon icon="solar:pen-bold" class="me-1"></iconify-icon>Edit
                                 </button>
                             </div>

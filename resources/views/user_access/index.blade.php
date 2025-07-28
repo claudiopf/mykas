@@ -82,7 +82,7 @@
                     { data: 'sales', name: 'sales' },
                     { data: 'ss' },
                     { data: 'area' },
-                    { data: 'action', orderable: false, searchable: false }
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
             });
 

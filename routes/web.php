@@ -8,6 +8,7 @@ use App\Http\Controllers\MasterData\RetailController;
 use App\Http\Controllers\Sales\RetailAchievementController;
 use App\Http\Controllers\Sales\SalesAchievementController;
 use App\Http\Controllers\Sales\SalesOrderController;
+use App\Http\Controllers\Sales\SalesVisitController;
 use App\Http\Controllers\Sales\TrackSalesController;
 use App\Http\Controllers\Sales\TransactionController;
 use App\Http\Controllers\UserManagement\UserAccessController;
@@ -57,8 +58,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin,ssadmin'])->group(function () {
-    Route::get('/sales-order', [SalesOrderController::class, 'index'])->name('sales_order.index');
-
     Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
 
     Route::get('/track-sales', [TrackSalesController::class, 'index'])->name('track_sales.index');
@@ -66,4 +65,11 @@ Route::middleware(['auth', 'role:admin,ssadmin'])->group(function () {
     Route::get('/sales-achievement', [SalesAchievementController::class, 'index'])->name('sales_achievement.index');
 
     Route::get('/retail-achievement', [RetailAchievementController::class, 'index'])->name('retail_achievement.index');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/sales-order', [SalesOrderController::class, 'index'])->name('sales_order.index');
+    Route::get('/sales-order/create', [SalesOrderController::class, 'create'])->name('sales_order.create');
+
+    Route::get('/sales-visit', [SalesVisitController::class, 'index'])->name('sales_visit.index');
 });

@@ -13,6 +13,8 @@ class TrackSalesController extends Controller
 
     public function index()
     {
+        $title = 'Track Sales';
+
         return view('track_sales.index');
     }
 }

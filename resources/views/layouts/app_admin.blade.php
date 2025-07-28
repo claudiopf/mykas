@@ -110,56 +110,88 @@
     <div class="app-sidebar">
         <!-- Sidebar Logo -->
         <div class="logo-box d-flex align-items-center justify-content-center">
-            <a href="{{ route('home') }}" class="text-center text-white">
-                KAS
-            </a>
+            <a href="{{ route('home') }}" class="text-center text-white">KAS</a>
         </div>
+
         <div class="scrollbar" data-simplebar>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title mt-2">Menu</li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                                 <span class="nav-icon">
-                                      <iconify-icon icon="solar:widget-5-broken"></iconify-icon>
-                                 </span>
+                    <span class="nav-icon">
+                        <iconify-icon icon="solar:widget-5-broken"></iconify-icon>
+                    </span>
                         <span class="nav-text"> Dashboard </span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-arrow" href="#masterdata" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="masterdata">
-                                 <span class="nav-icon">
-                                      <iconify-icon icon="solar:folder-with-files-broken"></iconify-icon>
-                                 </span>
-                        <span class="nav-text">Master Data</span>
-                    </a>
-                    <div class="collapse" id="masterdata">
-                        <ul class="nav sub-navbar-nav">
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('area.index') }}">Area</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('brand.index') }}">Brand</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('product.index') }}">Produk</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('retail.index') }}">Toko</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+
+                @if (in_array(auth()->user()->role, ['admin', 'ssadmin']))
+                    <li class="nav-item">
+                        <a class="nav-link menu-arrow" href="#masterdata" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="masterdata">
+                        <span class="nav-icon">
+                            <iconify-icon icon="solar:folder-with-files-broken"></iconify-icon>
+                        </span>
+                            <span class="nav-text">Master Data</span>
+                        </a>
+                        <div class="collapse" id="masterdata">
+                            <ul class="nav sub-navbar-nav">
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{ route('area.index') }}">Area</a>
+                                </li>
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{ route('brand.index') }}">Brand</a>
+                                </li>
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{ route('product.index') }}">Produk</a>
+                                </li>
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{ route('retail.index') }}">Toko</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-arrow" href="#userManagement" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="userManagement">
+                        <span class="nav-icon">
+                            <iconify-icon icon="icon-park:user"></iconify-icon>
+                        </span>
+                            <span class="nav-text">User Management</span>
+                        </a>
+                        <div class="collapse" id="userManagement">
+                            <ul class="nav sub-navbar-nav">
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{ route('user_management.index') }}">Tambah/Ubah</a>
+                                </li>
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{ route('user_access.index') }}">Hak Akses</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link menu-arrow" href="#sales" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sales">
-                                 <span class="nav-icon">
-                                      <iconify-icon icon="carbon:sales-ops"></iconify-icon>
-                                 </span>
+                    <span class="nav-icon">
+                        <iconify-icon icon="carbon:sales-ops"></iconify-icon>
+                    </span>
                         <span class="nav-text">Sales</span>
                     </a>
                     <div class="collapse" id="sales">
                         <ul class="nav sub-navbar-nav">
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('sales_visit.index') }}">Kunjungan Sales</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('sales_achievement.index') }}">Pencapaian Sales</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('retail_achievement.index') }}">Pencapaian Toko</a>
+                            </li>
                             <li class="sub-nav-item">
                                 <a class="sub-nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                             </li>
@@ -168,31 +200,6 @@
                             </li>
                             <li class="sub-nav-item">
                                 <a class="sub-nav-link" href="{{ route('track_sales.index') }}">Track Sales</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('sales_achievement.index') }}">Pencapaian Sales</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('retail_achievement.index') }}">Pencapaian Toko</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-arrow" href="#userManagement" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="userManagement">
-                                 <span class="nav-icon">
-                                      <iconify-icon icon="icon-park:user"></iconify-icon>
-                                 </span>
-                        <span class="nav-text">User Management</span>
-                    </a>
-                    <div class="collapse" id="userManagement">
-                        <ul class="nav sub-navbar-nav">
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('user_management.index') }}">Tambah/Ubah</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('user_access.index') }}">Hak Akses</a>
                             </li>
                         </ul>
                     </div>

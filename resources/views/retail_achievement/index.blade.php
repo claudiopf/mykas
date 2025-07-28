@@ -1,6 +1,6 @@
 @extends('layouts.app_admin')
 @section('content')
-    <h3>Pencapaian Retail</h3>
+    <h3>Pencapaian Toko</h3>
     <div class="card">
         <div class="card-body">
             <div class="container">

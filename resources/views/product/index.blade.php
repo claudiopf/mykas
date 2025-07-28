@@ -44,7 +44,7 @@
                 <form id="formAddProduct">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addBrandLabel">Tambah Product</h5>
+                        <h5 class="modal-title" id="addProductLabel">Tambah Product</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -235,12 +235,11 @@
             });
 
             $('#formEditProduct').on('submit', function (e) {
+                e.preventDefault();
+
                 let hargaDB = $('#edit-harga').val().replace(/\./g, '');
                 $('#edit-harga').val(hargaDB);
-            });
 
-            $('#formEditProduct').on('submit', function (e) {
-                e.preventDefault();
                 Swal.fire({
                     title: 'Simpan perubahan?',
                     icon: 'question',

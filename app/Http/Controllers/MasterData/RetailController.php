@@ -30,10 +30,10 @@ class RetailController extends Controller
                     if ($retail->areas->isEmpty()) {
                         return 'Area belum ditentukan';
                     }
-                    return $retail->areas->pluck('kode_area')->implode(', ');
+                    return $retail->areas->pluck('kode_area')->implode(',');
                 })
                 ->addColumn('action', function ($retail) {
-                    $areaIds = $retail->areas->pluck('id')->implode(', ');
+                    $areaIds = $retail->areas->pluck('id')->implode(',');
 
                     return '
                             <div class="text-center">
