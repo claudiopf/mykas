@@ -9,7 +9,7 @@
                         @csrf
                         <div class="row">
                             <div class="mb-3">
-                                <label for="retail" class="form-label">Toko</label>
+                                <label for="retail" class="form-label">Toko <code>*</code></label>
                                 <select class="form-select select2" name="retail_id" id="retail">
                                     <option value="">Pilih Toko</option>
                                     @foreach($retails as $retail)
@@ -20,7 +20,7 @@
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="product" class="form-label">Pilih Produk</label>
+                                <label for="product" class="form-label">Produk <code>*</code></label>
                                 <select class="form-select select2" id="product-select">
                                     <option value="">Pilih Produk</option>
                                     @foreach($products as $product)
@@ -45,6 +45,27 @@
                                     <div id="produkMobileBody" class="d-block d-sm-none mt-3"></div>
                                 </div>
 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="top" class="form-label">TOP <code>*</code></label>
+                                <select class="form-select" id="top">
+                                    <option value="">Pilih TOP</option>
+                                    <option value="0">0 Hari</option>
+                                    <option value="7">7 Hari</option>
+                                    <option value="14">14 Hari</option>
+                                    <option value="25">25 Hari</option>
+                                    <option value="28">28 Hari</option>
+                                    <option value="30">30 Hari</option>
+                                    <option value="60">60 Hari</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Catatan Sales</label>
+                                <textarea name="note_sales" class="form-control" id="note_sales" cols="30" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
