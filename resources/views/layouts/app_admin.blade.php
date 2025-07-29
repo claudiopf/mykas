@@ -125,6 +125,38 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-arrow" href="#sales" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sales">
+                    <span class="nav-icon">
+                        <iconify-icon icon="carbon:sales-ops"></iconify-icon>
+                    </span>
+                        <span class="nav-text">Sales</span>
+                    </a>
+                    <div class="collapse" id="sales">
+                        <ul class="nav sub-navbar-nav">
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('sales_visit.index') }}">Kunjungan Sales</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('sales_achievement.index') }}">Pencapaian Sales</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('retail_achievement.index') }}">Pencapaian Toko</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('transaction.index') }}">Transaksi</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('track_sales.index') }}">Track Sales</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 @if (in_array(auth()->user()->role, ['admin', 'ssadmin']))
                     <li class="nav-item">
                         <a class="nav-link menu-arrow" href="#masterdata" data-bs-toggle="collapse" role="button"
@@ -172,38 +204,6 @@
                         </div>
                     </li>
                 @endif
-
-                <li class="nav-item">
-                    <a class="nav-link menu-arrow" href="#sales" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sales">
-                    <span class="nav-icon">
-                        <iconify-icon icon="carbon:sales-ops"></iconify-icon>
-                    </span>
-                        <span class="nav-text">Sales</span>
-                    </a>
-                    <div class="collapse" id="sales">
-                        <ul class="nav sub-navbar-nav">
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('sales_visit.index') }}">Kunjungan Sales</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('sales_achievement.index') }}">Pencapaian Sales</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('retail_achievement.index') }}">Pencapaian Toko</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('transaction.index') }}">Transaksi</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('track_sales.index') }}">Track Sales</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>

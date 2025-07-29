@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'ss_id');
     }
+
+    public function salesVisits()
+    {
+        return $this->hasMany(SalesVisit::class);
+    }
 }

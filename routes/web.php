@@ -72,4 +72,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sales-order/create', [SalesOrderController::class, 'create'])->name('sales_order.create');
 
     Route::get('/sales-visit', [SalesVisitController::class, 'index'])->name('sales_visit.index');
+    Route::post('/sales-visit/store', [SalesVisitController::class, 'store'])->name('sales_visit.store');
 });

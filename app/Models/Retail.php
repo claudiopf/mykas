@@ -18,4 +18,9 @@ class Retail extends Model
             ->using(AreaRetail::class)
             ->withTimestamps();
     }
+
+    public function salesVisits()
+    {
+        return $this->hasMany(SalesVisit::class);
+    }
 }
