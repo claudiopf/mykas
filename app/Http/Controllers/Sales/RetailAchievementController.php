@@ -33,6 +33,6 @@ class RetailAchievementController extends Controller
                 ->make(true);
         }
 
-        return view('retail_achievement.index', compact('title'));
+        return view('sales.retail_achievement.index', compact('title'));
     }
 }

@@ -19140,3 +19140,7 @@ p.no-span::before {
 p.no-span::after {
   left: 1.5%;
 }
+
+.border-table-product {
+    border-color: #9ca3af;
+}

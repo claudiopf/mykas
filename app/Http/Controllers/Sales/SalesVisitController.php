@@ -51,7 +51,7 @@ class SalesVisitController extends Controller
                 ->rawColumns(['nama','image','tanggal','retail'])
                 ->make(true);
         }
-        return view('sales_visit.index', compact('title','retails', 'sales'));
+        return view('sales.sales_visit.index', compact('title','retails', 'sales'));
     }
 
     public function store(Request $request)

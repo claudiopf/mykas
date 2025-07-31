@@ -42,7 +42,7 @@ class BrandController extends Controller
                 ->make(true);
         }
 
-        return view('brand.index', compact('title'));
+        return view('master_data.brand.index', compact('title'));
     }
 
     public function store(Request $request)

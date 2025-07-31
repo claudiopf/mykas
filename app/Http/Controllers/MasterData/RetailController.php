@@ -56,7 +56,7 @@ class RetailController extends Controller
                 ->make(true);
         }
 
-        return view('retail.index', compact('title', 'areas'));
+        return view('master_data.retail.index', compact('title', 'areas'));
     }
 
     public function store(Request $request)

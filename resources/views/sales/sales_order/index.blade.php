@@ -15,13 +15,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="display" id="tableSO">
+                            <table class="display expandable-table" id="tableSO">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Tanggal Order</th>
                                     <th>Toko</th>
-                                    <th>Produk</th>
+                                    <th>Tanggal Order</th>
+                                    <th class="text-center">Produk</th>
                                     <th>Total Penjualan</th>
                                 </tr>
                                 </thead>
@@ -43,10 +43,10 @@
                 ajax: '{{ route('sales_order.index') }}',
                 columns: [
                     { data: 'DT_RowIndex' },
-                    { data: 'tgl_order', name: 'tgl_order' },
                     { data: 'toko', name: 'toko' },
-                    { data: 'product', name: '' },
-                    { data: 'total_penjualan', orderable: false, searchable: false }
+                    { data: 'tgl_order', name: 'tgl_order' },
+                    { data: 'product', name: 'product' },
+                    { data: 'total_penjualan', name: 'total_penjualan', orderable: false, searchable: false }
                 ]
             });
         })

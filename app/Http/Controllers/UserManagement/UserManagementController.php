@@ -45,7 +45,7 @@ class UserManagementController extends Controller
                 ->make(true);
         }
 
-        return view('user_management.index', compact('title'));
+        return view('user.user_management.index', compact('title'));
     }
 
     public function store(Request $request)

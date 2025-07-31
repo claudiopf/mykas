@@ -50,7 +50,7 @@ class AreaController extends Controller
                 ->make(true);
         }
 
-        return view('area.index', compact('title'));
+        return view('master_data.area.index', compact('title'));
     }
 
     public function store(Request $request)

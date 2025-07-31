@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sales_order_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('approved_by')->constrained('users');
+            $table->text('note_ssadmin')->nullable();
+            $table->enum('status_order', ['approved', 'rejected', 'pending'])->default('pending');
             $table->timestamps();
         });
     }

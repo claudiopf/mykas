@@ -15,6 +15,6 @@ class TrackSalesController extends Controller
     {
         $title = 'Track Sales';
 
-        return view('track_sales.index');
+        return view('sales.track_sales.index', compact('title'));
     }
 }

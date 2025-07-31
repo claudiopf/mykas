@@ -51,7 +51,7 @@ class UserAccessController extends Controller
                 ->make(true);
         }
 
-        return view('user_access.index', compact('roleSs', 'areas'));
+        return view('user.user_access.index', compact('roleSs', 'areas'));
     }
 
     public function update(Request $request, $id)

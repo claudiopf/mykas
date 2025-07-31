@@ -34,6 +34,6 @@ class SalesAchievementController extends Controller
                 ->make(true);
         }
 
-        return view('sales_achievement.index', compact('title'));
+        return view('sales.sales_achievement.index', compact('title'));
     }
 }

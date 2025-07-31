@@ -64,7 +64,7 @@ class ProductController extends Controller
                 ->make(true);
         }
 
-        return view('product.index', compact('title', 'brands'));
+        return view('master_data.product.index', compact('title', 'brands'));
     }
 
     public function store(Request $request)
