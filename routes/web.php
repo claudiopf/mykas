@@ -49,6 +49,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:admin,ssadmin'])->group(function () {
     Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transaction/{id}', [TransactionController::class, 'edit'])->name('transaction.edit');
+    Route::patch('/transaction/{id}', [TransactionController::class, 'update'])->name('transaction.update');
 
     Route::get('/track-sales', [TrackSalesController::class, 'index'])->name('track_sales.index');
 

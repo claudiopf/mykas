@@ -11,7 +11,8 @@ class SalesOrder extends Model
         'retail_id',
         'order_time',
         'note_sales',
-        'top'
+        'top',
+        'no_order'
     ];
 
     public function salesOrderDetails()
@@ -27,5 +28,10 @@ class SalesOrder extends Model
     public function retail()
     {
         return $this->belongsTo(Retail::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

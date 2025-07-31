@@ -25,7 +25,12 @@ class SalesVisitController extends Controller
         $sales = User::where('role', 'sales')->get();
 
         if ($request->ajax()) {
-            $salesVisits = SalesVisit::with('user','retail')->get();
+            if(auth()->user()->role == 'sales'){
+                $salesVisits = SalesVisit::with('user','retail')
+                    ->where('user_id', auth()->user()->id)->get();
+            } else {
+                $salesVisits = SalesVisit::with('user','retail')->get();
+            }
 
             return DataTables::of($salesVisits)
                 ->addIndexColumn()

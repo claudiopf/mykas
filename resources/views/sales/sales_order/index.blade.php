@@ -19,6 +19,7 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>No Order</th>
                                     <th>Toko</th>
                                     <th>Tanggal Order</th>
                                     <th class="text-center">Produk</th>
@@ -43,6 +44,7 @@
                 ajax: '{{ route('sales_order.index') }}',
                 columns: [
                     { data: 'DT_RowIndex' },
+                    { data: 'no_order', name: 'no_order' },
                     { data: 'toko', name: 'toko' },
                     { data: 'tgl_order', name: 'tgl_order' },
                     { data: 'product', name: 'product' },

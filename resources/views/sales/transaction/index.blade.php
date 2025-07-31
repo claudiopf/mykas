@@ -5,22 +5,17 @@
         <div class="card-body">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <button type="button" class="btn btn-primary d-inline-flex align-items-center gap-1"
-                                data-bs-toggle="modal" data-bs-target="#modalAddTransaction">
-                            <iconify-icon icon="solar:add-circle-linear" class="fs-5"></iconify-icon>
-                            <span>Tambah Transaksi</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="display" id="tableTransaction">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama</th>
+                                    <th>No Order</th>
+                                    <th>Nama Toko</th>
+                                    <th>Sales</th>
+                                    <th>Note Sales</th>
+                                    <th>Status</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
                                 </thead>
@@ -57,32 +52,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal Edit -->
-    <div class="modal fade" id="modalEditTransaction" tabindex="-1" aria-labelledby="editTransactionLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <form id="formEditTransaction">
-                    @csrf
-                    @method('PATCH')
-                    <input type="hidden" name="id" id="edit-id">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Transaksi</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="edit-nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" name="nama" id="edit-nama">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary" type="submit">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 @push('scripts')
     <script>
@@ -92,9 +61,13 @@
                 serverSide: true,
                 ajax: '{{ route('transaction.index') }}',
                 columns: [
-                    {data: 'DT_RowIndex'},
-                    {data: 'nama'},
-                    {data: 'action', orderable: false, searchable: false}
+                    { data: 'DT_RowIndex' },
+                    { data: 'no_order' },
+                    { data: 'nama_toko' },
+                    { data: 'sales' },
+                    { data: 'note_sales' },
+                    { data: 'status' },
+                    { data: 'action', orderable: false, searchable: false }
                 ]
             });
         })

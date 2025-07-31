@@ -19144,3 +19144,39 @@ p.no-span::after {
 .border-table-product {
     border-color: #9ca3af;
 }
+
+.table-nested-product {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-nested-product th,
+.table-nested-product td {
+    font-size: 12px;
+    padding: 4px 6px;
+    word-wrap: break-word;
+    vertical-align: middle;
+}
+
+.table-nested-product th:nth-child(1),
+.table-nested-product td:nth-child(1) {
+    width: 40%;
+}
+
+.table-nested-product th:nth-child(2),
+.table-nested-product td:nth-child(2),
+.table-nested-product th:nth-child(3),
+.table-nested-product td:nth-child(3),
+.table-nested-product th:nth-child(4),
+.table-nested-product td:nth-child(4) {
+    width: 20%;
+}
+
+/* Responsif di HP */
+@media (max-width: 576px) {
+    .table-nested-product th,
+    .table-nested-product td {
+        font-size: 10px;
+        padding: 3px 4px;
+    }
+}
