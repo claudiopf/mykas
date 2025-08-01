@@ -15,7 +15,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ secure_asset('assets/images/favicon.ico') }}">
 
     <!-- Google Font Family link -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,11 +23,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
 
     <!-- Vendor css -->
-    <link href="{{ asset('assets/css/vendor.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ secure_asset('assets/css/vendor.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Icons css -->
-    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ secure_asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
     <!-- App css -->
-    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ secure_asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
     <!-- DataTables css -->
     <link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet">
     <!-- Select2 -->
@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <!-- Theme Config js -->
-    <script src="{{ asset('assets/js/config.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/config.js') }}"></script>
 
     <!-- Dashboard js -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -80,7 +80,7 @@
                     <div class="dropdown topbar-item">
                         <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="d-flex align-items-center">
-                                <img class="rounded" width="24" src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="avatar-3">
+                                <img class="rounded" width="24" src="{{ secure_asset('assets/images/users/avatar-1.jpg') }}" alt="avatar-3">
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
@@ -251,13 +251,13 @@
 <!-- END Wrapper -->
 @stack('scripts')
 <!-- Vendor Javascript -->
-<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+<script src="{{ secure_asset('assets/js/vendor.min.js') }}"></script>
 
 <!-- App Javascript -->
-<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ secure_asset('assets/js/app.js') }}"></script>
 
 <!-- Dashboard Js -->
-<script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
+<script src="{{ secure_asset('assets/js/pages/dashboard.js') }}"></script>
 
 </body>
 

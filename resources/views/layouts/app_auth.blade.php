@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ secure_asset('assets/images/favicon.ico') }}">
 
     <!-- Google Font Family link -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,16 +22,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
 
     <!-- Vendor css -->
-    <link href="{{ asset('assets/css/vendor.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ secure_asset('assets/css/vendor.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Icons css -->
-    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ secure_asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
-    <link href="{{ asset('assets/css/style.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ secure_asset('assets/css/style.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Theme Config js -->
-    <script src="{{ asset('assets/js/config.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/config.js') }}"></script>
 
 </head>
 
@@ -39,10 +39,10 @@
 
     @yield('content')
     <!-- Vendor Javascript -->
-    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/vendor.min.js') }}"></script>
 
     <!-- App Javascript -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/app.js') }}"></script>
 
 </body>
 

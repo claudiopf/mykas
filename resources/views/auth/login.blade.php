@@ -9,10 +9,10 @@
                             <div class="text-center">
                                 <div class="mx-auto mb-4 text-center auth-logo">
                                     <a href="" class="logo-dark">
-                                        <img src="{{ asset('assets/images/logo-kas.png') }}" height="32" alt="logo dark">
+                                        <img src="{{ secure_asset('assets/images/logo-kas.png') }}" height="32" alt="logo dark">
                                     </a>
                                     <a href="" class="logo-light">
-                                        <img src="{{ asset('assets/images/logo-kas.png') }}" height="32" alt="logo light">
+                                        <img src="{{ secure_asset('assets/images/logo-kas.png') }}" height="32" alt="logo light">
                                     </a>
                                 </div>
                                 <h3 class="fw-bold text-primary mb-2">Welcome back!</h3>
