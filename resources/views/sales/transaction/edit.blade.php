@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="mb-3">
                                     <label for="note" class="form-label">Catatan SS Admin</label>
-                                    <textarea name="note_ssadmin" class="form-control" id="note" cols="30" rows="5"></textarea>
+                                    <textarea name="note_ssadmin" class="form-control" id="note" cols="30" rows="5">{{ $transaction->note_ssadmin ?? '' }}</textarea>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
@@ -98,6 +98,17 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
+            // Inisialisasi Select2
+            $('.select2').select2();
+
+            // AJAX Setup
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // Tampilkan produk existing
             @php
                 $existingDetails = $transaction->salesOrder->salesOrderDetails->sortBy(function($detail) {
                     return $detail->product->nama ?? '';
@@ -107,7 +118,6 @@
 
             if (existingDetails.length > 0) {
                 $('#produk-container').show();
-
                 existingDetails.forEach(function (detail) {
                     const productId = detail.product.id;
                     const productName = detail.product.nama;
@@ -115,23 +125,86 @@
                     const discount = detail.discount;
 
                     const tableRow = `
+                        <tr data-id="${productId}">
+                            <td class="text-center">
+                                <input type="hidden" name="product_id[]" value="${productId}">
+                                <input type="text" class="form-control" value="${productName}" readonly>
+                            </td>
+                            <td class="text-center">
+                                <input type="number" name="qty[]" class="form-control text-center" value="${qty}">
+                            </td>
+                            <td class="text-center">
+                                <input type="number" name="discount[]" class="form-control text-center" value="${discount}">
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger btn-sm" onclick="hapusBaris(this, '${productId}')">Hapus</button>
+                            </td>
+                        </tr>`;
+
+                    const mobileCard = `
+                        <div class="card mb-2" data-id="${productId}">
+                            <div class="card-body">
+                                <input type="hidden" name="product_id[]" value="${productId}">
+                                <div class="mb-2">
+                                    <label>Nama Produk</label>
+                                    <input type="text" class="form-control" value="${productName}" readonly>
+                                </div>
+                                <div class="mb-2">
+                                    <label>Qty</label>
+                                    <input type="number" name="qty[]" class="form-control text-center" value="${qty}">
+                                </div>
+                                <div class="mb-2">
+                                    <label>Diskon</label>
+                                    <input type="number" name="discount[]" class="form-control text-center" value="${discount}">
+                                </div>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="hapusCard(this, '${productId}')">Hapus</button>
+                            </div>
+                        </div>`;
+
+                    if ($(window).width() >= 576) {
+                        $('#produkBody').append(tableRow);
+                    } else {
+                        $('#produkMobileBody').append(mobileCard);
+                    }
+                });
+            }
+
+            // Event tambah produk
+            $('#product-select').on('change', function () {
+                const productId = $(this).val();
+                const productName = $(this).find('option:selected').data('nama');
+
+                if (!productId) return;
+
+                if ($('#produkBody tr[data-id="' + productId + '"]').length > 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Produk duplikat',
+                        text: 'Produk sudah dipilih sebelumnya.'
+                    });
+                    return;
+                }
+
+                $('#produk-container').show();
+
+                const tableRow = `
                     <tr data-id="${productId}">
                         <td class="text-center">
                             <input type="hidden" name="product_id[]" value="${productId}">
                             <input type="text" class="form-control" value="${productName}" readonly>
                         </td>
                         <td class="text-center">
-                            <input type="number" name="qty[]" class="form-control text-center" value="${qty}">
+                            <input type="number" name="qty[]" class="form-control text-center">
                         </td>
                         <td class="text-center">
-                            <input type="number" name="discount[]" class="form-control text-center" value="${discount}">
+                            <input type="number" name="discount[]" class="form-control text-center">
                         </td>
                         <td class="text-center">
                             <button type="button" class="btn btn-danger btn-sm" onclick="hapusBaris(this, '${productId}')">Hapus</button>
                         </td>
                     </tr>`;
 
-                    const mobileCard = `
+                const mobileCard = `
                     <div class="card mb-2" data-id="${productId}">
                         <div class="card-body">
                             <input type="hidden" name="product_id[]" value="${productId}">
@@ -141,128 +214,99 @@
                             </div>
                             <div class="mb-2">
                                 <label>Qty</label>
-                                <input type="number" name="qty[]" class="form-control text-center" value="${qty}">
+                                <input type="number" name="qty[]" class="form-control text-center">
                             </div>
                             <div class="mb-2">
                                 <label>Diskon</label>
-                                <input type="number" name="discount[]" class="form-control text-center" value="${discount}">
+                                <input type="number" name="discount[]" class="form-control text-center">
                             </div>
                             <button type="button" class="btn btn-danger btn-sm" onclick="hapusCard(this, '${productId}')">Hapus</button>
                         </div>
                     </div>`;
 
-                    if ($(window).width() >= 576) {
-                        $('#produkBody').append(tableRow);
-                    } else {
-                        $('#produkMobileBody').append(mobileCard);
+                if ($(window).width() >= 576) {
+                    $('#produkBody').append(tableRow);
+                } else {
+                    $('#produkMobileBody').append(mobileCard);
+                }
+
+                $(this).val('').trigger('change');
+            });
+
+            // Submit pakai SweetAlert2
+            $('#formEditTransaction').on('submit', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Yakin ingin menyimpan perubahan?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, simpan',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        submitEditTransaction();
+                    }
+                });
+            });
+
+            function submitEditTransaction() {
+                const form = $('#formEditTransaction');
+                const formData = form.serialize();
+                const url = "{{ route('transaction.update', $transaction->id) }}";
+
+                $('#btnEditTransaction').prop('disabled', true).text('Menyimpan...');
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                    success: function (res) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: res.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = "{{ route('transaction.index') }}";
+                        });
+                    },
+                    error: function (xhr) {
+                        let message = 'Terjadi kesalahan.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        }
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: message
+                        });
+
+                        $('#btnEditTransaction').prop('disabled', false).text('Ubah');
                     }
                 });
             }
         });
+
+        function hapusBaris(btn, productId) {
+            $(btn).closest('tr').remove();
+            $('#produkMobileBody').find(`[data-id="${productId}"]`).remove();
+            cekKosong();
+        }
+
+        function hapusCard(btn, productId) {
+            $(btn).closest('.card').remove();
+            $('#produkTable').find(`[data-id="${productId}"]`).remove();
+            cekKosong();
+        }
+
+        function cekKosong() {
+            if ($('#produkBody tr').length === 0 && $('#produkMobileBody .card').length === 0) {
+                $('#produk-container').hide();
+            }
+        }
     </script>
-    <script>
-            $(document).ready(function () {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $(document).on('click', '.btn-remove-row', function () {
-                    $(this).closest('.item-row').remove();
-                });
-
-                $('.select2').select2();
-
-                $('#product-select').on('change', function () {
-                    const productId = $(this).val();
-                    const productName = $(this).find('option:selected').data('nama');
-
-                    if (productId) {
-                        // Tampilkan container jika belum tampil
-                        $('#produk-container').show();
-
-                        // Cegah produk duplikat
-                        if ($('#produkBody tr[data-id="' + productId + '"]').length > 0) {
-                            alert("Produk sudah dipilih.");
-                            return;
-                        }
-
-                        // Table Row
-                        const tableRow = `
-                                        <tr data-id="${productId}">
-                                            <td class="text-center">
-                                                <input type="hidden" name="product_id[]" value="${productId}">
-                                                <input type="text" class="form-control" value="${productName}" readonly>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="number" name="qty[]" class="form-control text-center">
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="number" name="discount[]" class="form-control text-center">
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-sm" onclick="hapusBaris(this, '${productId}')">Hapus</button>
-                                            </td>
-                                        </tr>
-                                    `;
-
-                        // Mobile Card
-                        const mobileCard = `
-                                            <div class="card mb-2" data-id="${productId}">
-                                                <div class="card-body">
-                                                    <input type="hidden" name="product_id[]" value="${productId}">
-                                                    <div class="mb-2">
-                                                        <label>Nama Produk</label>
-                                                        <input type="text" class="form-control" value="${productName}" readonly>
-                                                    </div>
-                                                    <div class="mb-2">
-                                                        <label>Qty</label>
-                                                        <input type="number" name="qty[]" class="form-control text-center">
-                                                    </div>
-                                                    <div class="mb-2">
-                                                        <label>Diskon</label>
-                                                        <input type="number" name="discount[]" class="form-control text-center">
-                                                    </div>
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="hapusCard(this, '${productId}')">Hapus</button>
-                                                </div>
-                                            </div>
-                                        `;
-
-                        if ($(window).width() >= 576) {
-                            $('#produkBody').append(tableRow);
-                        } else {
-                            $('#produkMobileBody').append(mobileCard);
-                        }
-
-                        $(this).val('').trigger('change');
-                    }
-                });
-
-                $('#formEditTransaction input, #formEditTransaction select, #formEditTransaction textarea').each(function () {
-                    const isHidden = $(this).css('display') === 'none' || $(this).css('visibility') === 'hidden' || $(this).parents(':hidden').length > 0;
-                    if (isHidden) {
-                        $(this).prop('disabled', true);
-                    }
-                });
-            })
-
-            function hapusBaris(btn, productId) {
-                $(btn).closest('tr').remove();
-                $('#produkMobileBody').find(`[data-id="${productId}"]`).remove();
-                cekKosong();
-            }
-
-            function hapusCard(btn, productId) {
-                $(btn).closest('.card').remove();
-                $('#produkTable').find(`[data-id="${productId}"]`).remove();
-                cekKosong();
-            }
-
-            function cekKosong() {
-                if ($('#produkBody tr').length === 0 && $('#produkMobileBody .card').length === 0) {
-                    $('#produk-container').hide();
-                }
-            }
-        </script>
 @endpush
+

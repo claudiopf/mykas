@@ -8,7 +8,9 @@ use App\Models\Retail;
 use App\Models\SalesOrder;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use function Symfony\Component\String\s;
 
 class TransactionController extends Controller
 {
@@ -43,7 +45,17 @@ class TransactionController extends Controller
                     return $transaction->salesOrder->note_sales;
                 })
                 ->addColumn('status', function ($transaction) {
-                    return '<span class="badge bg-danger text-capitalize">' . $transaction->status_order . '</span>';
+                    $status = $transaction->status_order;
+
+                    if ($status === 'pending') {
+                        return '<span class="badge bg-warning text-capitalize">Pending</span>';
+                    } elseif ($status === 'approved') {
+                        return '<span class="badge bg-success text-capitalize">Approved</span>';
+                    } elseif ($status === 'rejected') {
+                        return '<span class="badge bg-danger text-capitalize">Rejected</span>';
+                    }
+
+                    return '<span class="badge bg-secondary">Belum ada data</span>';
                 })
                 ->addColumn('action', function ($transaction) {
                     $editUrl = route('transaction.edit', $transaction->id);
@@ -80,7 +92,84 @@ class TransactionController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'retail_id' => 'required|exists:retails,id',
+            'top' => 'required|integer',
+            'status_order' => 'required|in:approved,rejected,pending',
+            'product_id' => 'required|array',
+            'product_id.*' => 'exists:products,id',
+            'qty' => 'required|array',
+            'qty.*' => 'integer|min:1',
+            'discount' => 'required|array',
+            'discount.*' => 'numeric|min:0',
+        ]);
 
+        DB::beginTransaction();
+
+        try {
+            $user = auth()->user();
+            if (!in_array($user->role, ['ssadmin', 'admin'])) {
+                return response()->json(['message' => 'Hanya SS Admin atau Admin yang bisa meng-approve transaksi.'], 403);
+            }
+
+            $transaction = Transaction::findOrFail($id);
+            $transaction->update([
+                'status_order' => $request->status_order,
+                'note_ssadmin' => $request->note_ssadmin,
+                'approved_by' => $user->id,
+            ]);
+
+            $salesOrder = $transaction->salesOrder;
+            $salesOrder->update([
+                'retail_id' => $request->retail_id,
+                'top' => $request->top,
+            ]);
+
+            $existingDetails = $salesOrder->salesOrderDetails()->get()->keyBy('product_id');
+
+            $formProductIds = collect($request->product_id);
+            $inputQty = collect($request->qty);
+            $inputDiscount = collect($request->discount);
+
+            $processedProductIds = [];
+
+            foreach ($formProductIds as $index => $productId) {
+                $qty = $inputQty[$index];
+                $discount = $inputDiscount[$index] ?? 0;
+
+                if ($existingDetails->has($productId)) {
+                    // update jika sudah ada
+                    $detail = $existingDetails[$productId];
+                    $detail->update([
+                        'qty' => $qty,
+                        'discount' => $discount,
+                    ]);
+                } else {
+                    // insert baru
+                    $salesOrder->salesOrderDetails()->create([
+                        'product_id' => $productId,
+                        'qty' => $qty,
+                        'discount' => $discount,
+                    ]);
+                }
+
+                $processedProductIds[] = $productId;
+            }
+
+            // delete jika di DB tapi tidak dikirim dari form
+            $idsToDelete = $existingDetails->keys()->diff($processedProductIds);
+            if ($idsToDelete->isNotEmpty()) {
+                $salesOrder->salesOrderDetails()
+                    ->whereIn('product_id', $idsToDelete)
+                    ->delete();
+            }
+
+            DB::commit();
+
+            return response()->json(['message' => 'Transaksi berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Terjadi kesalahan.', 'error' => $e->getMessage()], 500);
+        }
     }
-
 }
